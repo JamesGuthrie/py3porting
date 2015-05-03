@@ -1,0 +1,8 @@
+#!/bin/dash
+
+pkglist="/var/lib/apt/lists/ftp.ch.debian.org_debian_dists_stretch_main_binary-amd64_Packages"
+
+for pkg in `python3 py2_only_pkgs.py -p $pkglist -c cache.dat`; do
+    rdeps=`apt-rdepends -r $pkg 2>/dev/null | wc -l`
+    echo "$rdeps\t$pkg"
+done
